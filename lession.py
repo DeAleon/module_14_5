@@ -13,6 +13,7 @@ import bd
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
+bd.initiate_db()
 all_product = bd.get_all_products()
 
 kb = ReplyKeyboardMarkup(

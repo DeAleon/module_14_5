@@ -1,35 +1,31 @@
 import sqlite3
 from distutils.command.check import check
 
-connection = sqlite3.connect('database.db')
-cursor = connection.cursor()
 
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS Users(
-id INTEGER PRIMARY KEY,
-username TEXT NOT NULL,
-email TEXT NOT NULL,
-age INTEGER NOT NULL,
-balance INTEGER NOT NULL
-)
-''')
+def initiate_db():
+    connection = sqlite3.connect('database.db')
+    cursor = connection.cursor()
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS Users(
+    id INTEGER PRIMARY KEY,
+    username TEXT NOT NULL,
+    email TEXT NOT NULL,
+    age INTEGER NOT NULL,
+    balance INTEGER NOT NULL
+    )
+    ''')
 
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS Products(
-id INTEGER PRIMARY KEY,
-title TEXT NOT NULL,
-description TEXT,
-price INTEGER NOT NULL
-)
-''')
-
-cursor.execute('CREATE INDEX IF NOT EXISTS idx_title ON Products (title)')
-
-# for i in range(1, 5):
-#     cursor.execute(f'INSERT INTO Products (title, description, price) VALUES (?, ?, ?)', (f'Продукт{i}', f'Описание{i}', i * 100))
-
-connection.commit()
-connection.close()
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS Products(
+    id INTEGER PRIMARY KEY,
+    title TEXT NOT NULL,
+    description TEXT,
+    price INTEGER NOT NULL
+    )
+    ''')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_title ON Products (title)')
+    connection.commit()
+    connection.close()
 
 def is_included(username):
     connection = sqlite3.connect('database.db')
